@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#box {
+  width: 1200px;
+  height: 1000px;
+  margin: auto;
+  border: 1px solid red;
+  background-color: #f2f5ff;
+}
+
+ul {
+  list-style: none;
+}
+
+#header {
+  padding: 20px;
+}
+
+#header-hall {
+  display: flex;
+  justify-content: space-around;
+}
+
+#header-hall li {
+  width: 150px;
+  height: 150px;
+  padding: 20px;
+  line-height: 30px;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-top: 15px;
+}
+
+p {
+  margin-top: 10px;
+  color: #ada996;
+}
+
+li:nth-child(1) h1 {
+  margin-top: 10px;
+  color: #737ef3;
+}
+
+li:nth-child(2) h1 {
+  margin-top: 10px;
+  color: #fa6249;
+}
+
+li:nth-child(3) h1 {
+  margin-top: 10px;
+  color: #59ce7d;
+}
+
+li:nth-child(4) h1 {
+  margin-top: 10px;
+  color: #4292fd;
+}
+
+li:nth-child(5) h1 {
+  margin-top: 10px;
+  color: #f89b4a;
+}
+
+li:nth-child(6) h1 {
+  margin-top: 10px;
+  color: #15cfb9;
+}
+
+#user {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #000;
+  margin-top: 25px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#main {
+  width: 500px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 10%;
+  border-top-right-radius: 10%;
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 10%;
+  border-bottom-right-radius: 10%;
+  margin-top: 20px;
+}
+
+#right {
+  width: 500px;
+  height: 500px;
+  background-color: #ffffff;
+  border-top-right-radius: 10%;
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 10%;
+  border-bottom-right-radius: 10%;
+  margin-top: 20px;
+}
+
+button {
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffffff;
+}
+
+button:nth-child(1) {
+  background-color: #4292fd;
+}/*# sourceMappingURL=shopping.css.map */

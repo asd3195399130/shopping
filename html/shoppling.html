@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../layui-v2.8.17/layui/css/layui.css" />
+    <script src="../layui-v2.8.17/layui/layui.js"></script>
+    <link rel="stylesheet" href="../sass/shopping.css" />
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box">
+      <div id="header">
+        <h2>待办事项</h2>
+        <ul id="header-hall">
+          <li>
+            <h3>代发货订单</h3>
+            <p>单位（笔）</p>
+            <h1>0</h1>
+          </li>
+          <li>
+            <h3>待处理售后</h3>
+            <p>单位（笔）</p>
+            <h1>0</h1>
+          </li>
+          <li>
+            <h3>待付款订单</h3>
+            <p>单位（笔）</p>
+            <h1>109</h1>
+          </li>
+          <li>
+            <h3>待补货商品</h3>
+            <p>单位（个）</p>
+            <h1>0</h1>
+          </li>
+          <li>
+            <h3>待审核会员</h3>
+            <p>单位（个）</p>
+            <h1>0</h1>
+          </li>
+          <li>
+            <h3>待审核佣金</h3>
+            <p>单位（个）</p>
+            <h1>0</h1>
+          </li>
+        </ul>
+      </div>
+      <div id="user">
+        <div>
+          <h2 style="float: left">新增会员</h2>
+          <div style="float: right">
+            <button>今天</button>
+            <button>昨天</button>
+            <button>近七日</button>
+            <button>近30日</button>
+          </div>
+          <div style="clear: both"></div>
+          <div id="main"></div>
+        </div>
+        <div>
+          <h2 style="float: left">新增订单</h2>
+          <div style="float: right">
+            <button>今天</button>
+            <button>昨天</button>
+            <button>近七日</button>
+            <button>近30日</button>
+          </div>
+          <div style="clear: both"></div>
+          <div id="right"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    var chartDom = document.getElementById("main");
+    var myChart = echarts.init(chartDom);
+    var option;
+    let xLabel = ["2023-09-17", "2023-09-25", "2023-10-03", "2023-10-11"];
+    let staff = ["4", "0", "1", "0", "1", "2", "0", "0", "1", "1"];
+
+    option = {
+      backgroundColor: "#ffffff",
+      borderradius: "10%",
+      tooltip: {
+        trigger: "axis",
+        backgroundColor: "",
+        // axisPointer: {
+        //   lineStyle: {
+        //     color: {
+        //       type: "linear",
+        //       x: 0,
+        //       y: 0,
+        //       x2: 0,
+        //       y2: 1,
+        //       colorStops: [
+        //         {
+        //           offset: 0,
+        //           color: "rgba(126,199,255,0)", // 0% 处的颜色
+        //         },
+        //         {
+        //           offset: 0.5,
+        //           color: "rgba(126,199,255,1)", // 100% 处的颜色
+        //         },
+        //         {
+        //           offset: 1,
+        //           color: "rgba(126,199,255,0)", // 100% 处的颜色
+        //         },
+        //       ],
+        //       global: false, // 缺省为 false
+        //     },
+        //   },
+        // },
+      },
+      legend: {
+        top: "4%",
+        textStyle: {
+          fontSize: 14,
+          color: "#b0b3b5",
+        },
+        itemGap: 50,
+        // right: '50%'
+      },
+      grid: {
+        top: "18%",
+        left: "15%",
+        right: "5%",
+        bottom: "25%",
+        // containLabel: true
+      },
+      xAxis: [
+        {
+          type: "category",
+          boundaryGap: false,
+          axisLine: {
+            //坐标轴轴线相关设置。数学上的x轴
+            show: true,
+            lineStyle: {
+              color: "#b0b3b5",
+              type: "dashed",
+            },
+          },
+          axisLabel: {
+            //坐标轴刻度标签的相关设置
+            textStyle: {
+              color: "#7ec7ff",
+              padding: 16,
+              fontSize: 15,
+            },
+            formatter: function (data) {
+              return data;
+            },
+          },
+          splitLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          data: xLabel,
+        },
+      ],
+      yAxis: [
+        {
+          name: "人数",
+          nameTextStyle: {
+            color: "#7ec7ff",
+            fontSize: 16,
+            padding: 10,
+          },
+          min: 0,
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#",
+              type: "dashed",
+              width: 2,
+            },
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: "#7ec7ff",
+              padding: 16,
+            },
+            formatter: function (value) {
+              if (value === 0) {
+                return value;
+              }
+              return value;
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+        },
+      ],
+      series: [
+        {
+          name: "新增会员",
+          type: "line",
+          symbol: "rect", // 默认是空心圆（中间是白色的），改成实心圆
+          showAllSymbol: "auto",
+          symbolSize: 1,
+          smooth: true,
+          lineStyle: {
+            normal: {
+              width: 5,
+              color: "#15cfb9", // 线条颜色
+            },
+            borderColor: "red",
+          },
+          itemStyle: {
+            color: "#15cfb9",
+            borderColor: "#646ace",
+            borderWidth: 1,
+          },
+          tooltip: {
+            show: true,
+          },
+
+          data: staff,
+        },
+      ],
+    };
+    option && myChart.setOption(option);
+  </script>
+  <script>
+    var chartDom = document.getElementById("right");
+    var myChart = echarts.init(chartDom);
+    var option;
+    var loadData = [];
+    var titleArr = [
+      "2023-09-17",
+      "2023-09-23",
+      "2023-09-29",
+      "2023-10-05",
+      "2023-10-11",
+    ];
+    var allArr = [3, 1, 1, 1, 2];
+    var chuqinArr = [3, 4, 3, , 2, 12];
+
+    option = {
+      backgroundColor: "#081736",
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+        },
+      },
+      legend: {
+        top: "10%",
+        data: ["新增订单"],
+        textStyle: {
+          //字体颜色
+          color: "#fff",
+          fontSize: 16,
+        },
+      },
+      grid: {
+        top: "20%",
+        left: "10%",
+        right: "10%",
+        bottom: "15%",
+        containLabel: true,
+      },
+      yAxis: {
+        name: "单位（笔）",
+        type: "value",
+
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: "#1a4b98",
+            type: "solid",
+          },
+        },
+        axisLine: {
+          show: true,
+          lineStyle: {
+            color: "#009dff",
+          },
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          color: "#fff",
+        },
+      },
+      xAxis: {
+        type: "category",
+        data: titleArr,
+        axisLine: {
+          show: true,
+          lineStyle: {
+            color: "#009dff",
+          },
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          color: "#fff", //x轴字体颜色
+          textStyle: {
+            fontSize: 16,
+          },
+          formatter: function (params) {
+            var newParamsName = ""; // 最终拼接成的字符串
+            var paramsNameNumber = params.length; // 实际标签的个数
+            var provideNumber = 4; // 每行能显示的字的个数
+            var rowNumber = Math.ceil(paramsNameNumber / provideNumber); // 换行的话，需要显示几行，向上取整
+            /**
+             * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+             */
+            // 条件等同于rowNumber>1
+            if (paramsNameNumber > provideNumber) {
+              /** 循环每一行,p表示行 */
+              for (var p = 0; p < rowNumber; p++) {
+                var tempStr = ""; // 表示每一次截取的字符串
+                var start = p * provideNumber; // 开始截取的位置
+                var end = start + provideNumber; // 结束截取的位置
+                // 此处特殊处理最后一行的索引值
+                if (p == rowNumber - 1) {
+                  // 最后一次不换行
+                  tempStr = params.substring(start, paramsNameNumber);
+                } else {
+                  // 每一次拼接字符串并换行
+                  tempStr = params.substring(start, end) + "\n";
+                }
+                newParamsName += tempStr; // 最终拼成的字符串
+              }
+            } else {
+              // 将旧标签的值赋给新标签
+              newParamsName = params;
+            }
+            //将最终的字符串返回
+            return newParamsName;
+          },
+        },
+      },
+      series: [
+        {
+          name: "新增订单",
+          type: "bar",
+          barWidth: 12,
+          barGap: "80%",
+          data: allArr,
+          itemStyle: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 1,
+              x2: 0,
+              y2: 0,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: "#8BDCFF", // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "#4594E8", // 100% 处的颜色
+                },
+              ],
+              global: false, // 缺省为 false
+            },
+            normal: {
+              //柱形图上方标题
+              label: {
+                show: true,
+                position: "top",
+                textStyle: {
+                  color: "#fff",
+                  fontSize: 12,
+                },
+              },
+              barBorderRadius: [24, 24, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                //颜色渐变
+                {
+                  offset: 0,
+                  color: "#00b1f2",
+                },
+                {
+                  offset: 0.5,
+                  color: "#00b1f2",
+                },
+                {
+                  offset: 1,
+                  color: "#00b1f2",
+                },
+              ]),
+            },
+          },
+        },
+        {
+          name: "结案",
+          type: "bar",
+          barWidth: 12,
+          barGap: "80%",
+          data: chuqinArr,
+          itemStyle: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 1,
+              x2: 0,
+              y2: 0,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: "#8BDCFF", // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "#4594E8", // 100% 处的颜色
+                },
+              ],
+              global: false, // 缺省为 false
+            },
+            normal: {
+              //柱形图上方标题
+              label: {
+                show: true,
+                position: "top",
+                textStyle: {
+                  color: "#fff",
+                  fontSize: 12,
+                },
+              },
+              barBorderRadius: [24, 24, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                //颜色渐变
+                {
+                  offset: 0,
+                  color: "#7def86",
+                },
+                {
+                  offset: 0.5,
+                  color: "#7def86",
+                },
+                {
+                  offset: 1,
+                  color: "#7def86",
+                },
+              ]),
+            },
+          },
+        },
+      ],
+    };
+    option && myChart.setOption(option);
+  </script>
+</html>
