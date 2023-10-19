@@ -6,7 +6,6 @@
 
 #box {
   width: 1200px;
-  height: 1000px;
   margin: auto;
   border: 1px solid red;
   background-color: #f2f5ff;
@@ -114,4 +113,100 @@ button {
 
 button:nth-child(1) {
   background-color: #4292fd;
+}
+
+#create {
+  width: 100%;
+  height: 600px;
+  border: 1px solid blue;
+  margin-top: 10px;
+}
+
+#create_at {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#create_at_ca {
+  display: flex;
+  justify-content: space-around;
+}
+
+#create_at_ca ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#create_at_ca ul li {
+  width: 150px;
+  height: 120px;
+  line-height: 25px;
+  margin-top: 11px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+#create_cs {
+  width: 600px;
+  height: 500px;
+  border: 1px solid blue;
+}
+
+#create_at_ca ul li p {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+#create_at_ca ul li h2 {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+#fotter {
+  width: 100%;
+  background-color: #4292fd;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#fotter_at {
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#fotter_ta {
+  width: 500px;
+  height: 500px;
+  background-color: red;
+}
+
+#fotter_xs {
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#fotter_xl {
+  width: 500px;
+  height: 500px;
+  background-color: red;
+}
+
+#footer {
+  width: 100%;
+  height: 500px;
+}
+
+#footer_bu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }/*# sourceMappingURL=shopping.css.map */
