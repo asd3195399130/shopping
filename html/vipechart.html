@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../sass/vipechart.css" />
+    <link rel="stylesheet" href="../layui-v2.8.17/layui/css/layui.css" />
+    <script src="../layui-v2.8.17/layui/layui.js"></script>
+    <script src="../js/echarts.min.js"></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box">
+      <div class="layuibtn">
+        <div id="nav">
+          <h1>会员累计数据</h1>
+          <p>数据更新于2023-07-01 07：35：13，每日更新一次</p>
+          <span class="layui-icon layui-icon-question"></span>
+          说明
+        </div>
+        <ul>
+          <li>
+            <i></i>
+            <p>积累会员数</p>
+            <h2></h2>
+          </li>
+          <li>
+            <i></i>
+            <p>访问会员数</p>
+            <h2></h2>
+          </li>
+          <li>
+            <i></i>
+            <p>付费会员数</p>
+            <h2></h2>
+          </li>
+          <li>
+            <i></i>
+            <p>流失率</p>
+            <h2></h2>
+          </li>
+        </ul>
+      </div>
+      <div id="middle">
+        <div class="layuiby">
+          <h1 style="float: left">会员增长趋势</h1>
+          <div style="float: right">
+            <span>日</span>
+            <span>月</span>
+            <span>年</span>
+            <div class="layui-inline">
+              <label class="layui-form-label" width="100px">日期范围</label>
+              <div class="layui-input-inline">
+                <input
+                  type="text"
+                  class="layui-input"
+                  id="ID-laydate-shortcut-range-date"
+                  placeholder=" - " />
+              </div>
+            </div>
+          </div>
+          <div style="clear: both"></div>
+        </div>
+        <div id="btn"></div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    layui.use(function () {
+      var laydate = layui.laydate;
+      var util = layui.util;
+      laydate.render({
+        elem: "#ID-laydate-shortcut-range-date",
+        range: true,
+        shortcuts: [
+          {
+            text: "上个月",
+            value: function () {
+              var value = [];
+              var date1 = new Date();
+              date1.setMonth(date1.getMonth() - 1);
+              date1.setDate(1);
+              date1.setHours(0, 0, 0, 0);
+              value.push(date1);
+              var date2 = new Date();
+              date2.setDate(1);
+              date2.setHours(0, 0, 0, 0);
+              date2 = date2.getTime() - 1;
+              value.push(new Date(date2));
+              return value;
+            },
+          },
+          {
+            text: "这个月",
+            value: function () {
+              var value = [];
+              var date1 = new Date();
+              // date1.setMonth(date1.getMonth() - 1);
+              date1.setDate(1);
+              date1.setHours(0, 0, 0, 0);
+              value.push(date1);
+              var date2 = new Date();
+              date2.setMonth(date2.getMonth() + 1);
+              date2.setDate(1);
+              date2.setHours(0, 0, 0, 0);
+              date2 = date2.getTime() - 1;
+              value.push(new Date(date2));
+              return value;
+            },
+          },
+          {
+            text: "下个月",
+            value: function () {
+              var value = [];
+              var date1 = new Date();
+              date1.setMonth(date1.getMonth() + 1);
+              date1.setDate(1);
+              date1.setHours(0, 0, 0, 0);
+              value.push(date1);
+              var date2 = new Date();
+              date2.setMonth(date2.getMonth() + 2);
+              date2.setDate(1);
+              date2.setHours(0, 0, 0, 0);
+              date2 = date2.getTime() - 1;
+              value.push(new Date(date2));
+              return value;
+            },
+          },
+        ],
+      });
+    });
+    fetch("../js/vip.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        $("li:eq(0) h2").html(data.member_count);
+        $("li:eq(1) h2").html(data.member_view_count);
+        $("li:eq(2) h2").html(data.order_pay_member_count);
+        $("li:eq(3) h2").html(data.un_view_scale);
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
+    let time = [];
+    let arr = [];
+    let arr1 = [];
+    let arr2 = [];
+    $(function () {
+      echartfun();
+    });
+    function echartfun() {
+      arr = [];
+      time = [];
+      arr1 = [];
+      fetch("../js/echart.json")
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((item, index) => {
+            arr.push(Object.keys(item));
+            time.push(Object.values(item));
+          });
+          cachers(time, arr);
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    function cachers(arr, time) {
+      data = time[0].shift();
+      console.log(arr);
+      arr[0].forEach((item, index) => {
+        arr1.push(item.member_count);
+        arr2.push(item.member_view_count);
+      });
+      var chartDom = document.getElementById("btn");
+      var myChart = echarts.init(chartDom);
+      var option;
+      option = {
+        grid: {
+          top: "20%",
+          left: "5%",
+          right: "5%",
+          bottom: "8%",
+          containLabel: true,
+        },
+        color: ["#7692fe", "#62dc82"],
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "rgba(1, 13, 19, 0.5)",
+          borderWidth: 1,
+          axisPointer: {
+            type: "shadow",
+          },
+
+          textStyle: {
+            color: "rgba(212, 232, 254, 1)",
+          },
+          extraCssText: "z-index:2",
+        },
+        legend: {
+          right: 20,
+          top: 30,
+          icon: "circle",
+          itemWidth: 15,
+          itemHeight: 10,
+          itemGap: 15,
+          borderRadius: 4,
+          textStyle: {
+            color: "#000",
+            fontFamily: "Alibaba PuHuiTi",
+            fontSize: 14,
+            fontWeight: 400,
+          },
+        },
+        xAxis: {
+          type: "category",
+          data: time[0],
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: "#393939", //X轴文字颜色
+            },
+          },
+        },
+        yAxis: [
+          {
+            type: "value",
+            name: ["123"],
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "black",
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLabel: {
+              color: "#393939",
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "#e7e9ef",
+                type: "dashed",
+              },
+            },
+          },
+        ],
+        series: [
+          {
+            name: "新增会员数",
+            type: "line",
+            symbol: "circle", //标记的图形为实心圆
+            symbolSize: 0, //标记的大小
+            lineStyle: {
+              color: "#7692fe",
+              width: 3,
+            },
+            data: arr1,
+          },
+          {
+            name: "新增访客数",
+            type: "line",
+            symbol: "circle", //标记的图形为实心圆
+            symbolSize: 0, //标记的大小
+            lineStyle: {
+              color: "#62dc82",
+              width: 3,
+            },
+            data: arr2,
+          },
+        ],
+      };
+      option && myChart.setOption(option);
+    }
+  </script>
+</html>

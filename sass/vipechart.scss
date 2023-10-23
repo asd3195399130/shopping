@@ -1,0 +1,114 @@
+:root {
+  --bakcground-green: #f8fffa;
+  --background-cr: #dee2d8;
+  --background-yellow: #6c7173;
+  --backgroud-black: #303232;
+  --bakcgeounf-op: #edfff3;
+  --backgound-po: #838487;
+  --red-btrck: #b92b27;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#box {
+  width: 90rem;
+  height: 90em;
+  margin: auto;
+  // border: 1px solid red;
+}
+ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+ul li {
+  width: 320px;
+  height: 160px;
+  // border: 1px solid var(--backgound-po);
+  background-color: rgb(237, 255, 243);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+li h2 {
+  margin-left: 110px;
+  margin-top: -5rem;
+}
+i {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  // border: 1px solid var(--red-btrck);
+  border-radius: 50%;
+  margin-top: 20px;
+  margin-left: 10px;
+  background-color: rgba(237, 255, 243);
+}
+li p {
+  color: var(--backgound-po);
+}
+
+li:nth-child(1) i {
+  background: url(../image/微信截图_20231023084131.png) no-repeat 15px;
+}
+
+li:nth-child(2) i {
+  background: url(../image/微信截图_20231023084113.png) no-repeat 15px;
+}
+li:nth-child(3) i {
+  background: url(../image/微信截图_20231023084054.png) no-repeat 15px;
+}
+li:nth-child(4) i {
+  background: url(../image/微信截图_20231023084015.png) no-repeat 15px;
+}
+#nav {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+p {
+  color: #6c7173;
+  font-size: 15px;
+  margin-left: 50px;
+}
+.layuibtn {
+  width: 90rem;
+  height: 20rem;
+  background-color: var(--bakcground-green);
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  padding: 20px;
+}
+#middle {
+  width: 90rem;
+  height: 50rem;
+  border: 1px solid var(--red-btrck);
+  margin-top: 8rem;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  padding: 20px;
+}
+.layuiby {
+  // display: flex;
+  width: 100%;
+}
+.layuiby span {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--background-yellow);
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+}
+#btn {
+  width: 100%;
+  height: 50rem;
+  border: 1px solid var(--bakcground-green);
+}

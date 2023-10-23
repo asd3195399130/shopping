@@ -8,12 +8,23 @@
     <link rel="stylesheet" href="" />
     <script src=""></script>
   </head>
-  <style></style>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+  </style>
   <body>
     <div id="box"></div>
   </body>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
   <script>
+    $(function () {
+      $("#box").show();
+      $("#box").slideUp(0);
+      $("#box").slideDown(2000);
+    });
     $.ajax({
       url: "http://127.0.0.1:3000/shopplist/list",
       type: "GET",
