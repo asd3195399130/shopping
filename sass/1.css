@@ -1,0 +1,41 @@
+#box {
+  width: 500px;
+  height: 500px;
+  animation: myAnimation 10s infinite;
+}
+
+@keyframes myAnimation {
+  0% {
+    background-color: red;
+  }
+  10% {
+    background-color: black;
+  }
+  20% {
+    background-color: #5a1216;
+  }
+  30% {
+    background-color: #474b4c;
+  }
+  40% {
+    background-color: #22a2c3;
+  }
+  50% {
+    background-color: yellow;
+  }
+  60% {
+    background-color: #20a162;
+  }
+  70% {
+    background-color: #eef7f2;
+  }
+  80% {
+    background-color: #fed71a;
+  }
+  90% {
+    background-color: #b7ae8f;
+  }
+  100% {
+    background-color: green;
+  }
+}/*# sourceMappingURL=1.css.map */

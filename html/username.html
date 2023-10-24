@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../layui-v2.8.17/layui/css/layui.css" />
+    <script src="../layui-v2.8.17/layui/layui.js"></script>
+  </head>
+  <style>
+    table {
+      width: 1200px;
+      border-collapse: collapse;
+      margin: auto;
+    }
+    tr {
+      text-align: center;
+    }
+    #bcak {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+    #from {
+      width: 500px;
+      height: 500px;
+      border: 1px solid red;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    input {
+      margin-top: 15px;
+    }
+    select {
+      margin: 15px;
+    }
+  </style>
+  <body>
+    <button id="addition" class="layui-btn">添加</button>
+    <div id="bcak">
+      <div id="from">
+        <h1>添加</h1>
+        <form action="#">
+          <div>
+            <label for="username">名字：</label>
+            <input type="text" name="" id="username" value="" />
+          </div>
+          <div>
+            <select name="" id="sex">
+              <option value="男">男</option>
+              <option value="女">女</option>
+            </select>
+          </div>
+          <div>
+            <label for="age">年龄：</label>
+            <input type="text" name="" id="age" value="" />
+          </div>
+          <div>
+            <label for="birthday">出生日期：</label>
+            <input type="text" id="birthday" name="" />
+          </div>
+        </form>
+        <button id="addbtn" class="layui-btn">提交</button>
+        <button id="cancel" class="layui-btn layui-bg-orange">取消</button>
+      </div>
+    </div>
+
+    <div id="box">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名字</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>出生日期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div style="margin-left: 361px">
+        <button id="prve" class="layui-btn layui-bg-blue">上一页</button>
+        <span>1</span>
+        <button id="next" class="layui-btn layui-bg-blue">下一页</button>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    let page = 1,
+      size = 5;
+    let editid = null;
+    let userData = [];
+    let URL = "http://127.0.0.1:3000/users";
+    $(function () {
+      getreading();
+      $("#prve").click(function () {
+        if (page > 1) {
+          page--;
+        }
+        $("span").html(page);
+        getreading();
+      });
+      $("#next").click(function () {
+        if (page == 1 || page > 1) {
+          page++;
+        }
+        $("span").html(page);
+        getreading();
+      });
+      $("#addition").click(addition);
+      $("#cancel").click(function () {
+        $("#bcak").toggle();
+      });
+      $("#addbtn").click(addbtnfun);
+      $("tbody").on("click", "button", tbodybtnfun);
+    });
+    function tbodybtnfun() {
+      // console.log(event.target);
+      if (event.target.innerHTML == "删除") {
+        let index = $(this).data("index");
+        // console.log(index);
+        editid = userData[index].id;
+        $.ajax({
+          url: URL + "/delete" + editid,
+          type: "delete",
+          dataType: "json",
+          success: function (res) {
+            getreading();
+          },
+        });
+      }
+      if (event.target.innerHTML == "更新") {
+        let index = $(this).data("index");
+        // console.log(index);
+        editid = userData[index].id;
+        $("#username").val(userData[index].name);
+        $("#sex").val(userData[index].sex);
+        $("#age").val(userData[index].age);
+        $("#birthday").val(userData[index].birth_date);
+        $("#addbtn").html("保存");
+        addition();
+      }
+    }
+    function addition() {
+      $("#bcak").toggle();
+    }
+    function addbtnfun() {
+      let data = {
+        name: $("#username").val(),
+        sex: $("#sex").val(),
+        age: $("#age").val(),
+        birth_date: $("#birthday").val(),
+      };
+      console.log($(this));
+      let api = URL + "/add";
+      if ($("#addbtn").html() == "保存") {
+        api = URL + "/update" + editid;
+      }
+      $.ajax({
+        url: api,
+        type: "POST",
+        data: data,
+        success: function (res) {
+          console.log(res.data);
+          getreading();
+        },
+      });
+    }
+    function getreading() {
+      $.ajax({
+        url: URL + "/list",
+        type: "GET",
+        dataType: "json",
+        data: {
+          page: page,
+          size: size,
+        },
+        success: function (res) {
+          console.log(res);
+          getraning(res);
+        },
+      });
+    }
+    function getraning(res) {
+      userData = res.data;
+      let html = "";
+      userData.forEach((item, index) => {
+        html += `<tr>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>${item.sex}</td>
+            <td>${item.age}</td>
+            <td>${getdate(item.birth_date)}</td>
+            <td>
+              <button class="layui-btn layui-bg-red" data-index=${index}>删除</button>
+              <button class="layui-btn layui-bg-purple" data-index=${index}>更新</button>
+            </td>
+          </tr>`;
+      });
+      $("tbody").html(html);
+    }
+    function getdate(datetime) {
+      //datetime是拿到的时间戳
+      var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var year = date.getFullYear(),
+        month = ("0" + (date.getMonth() + 1)).slice(-2),
+        sdate = ("0" + date.getDate()).slice(-2);
+
+      // 拼接
+      var result = year + "-" + month + "-" + sdate;
+
+      // 返回
+      return result;
+    }
+  </script>
+</html>
